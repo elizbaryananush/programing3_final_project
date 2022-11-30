@@ -59,10 +59,13 @@ function addothercharacters() {
             amenakerArr.push(new Amenaker(x, y))
         }
     }
+}
+
+function lake(){
     for (let j = 0; j < 1; j++) {
         let x = Math.floor(Math.random() * matLen);
         let y = Math.floor(Math.random() * matLen);
-        if (matrix[y][x] === 0 || matrix[y][x] === 1 || matrix[y][x] === 2 || matrix[y][x] === 3) {
+        if (matrix[y][x] === 0 || matrix[y][x] === 1) {
             matrix[y][x] = 4;
             lakeArr.push(new Lake(x, y))
         }
@@ -84,24 +87,52 @@ function clearf() {
 
 }
 
+pauseArgument = false;
+
+function pause() {
+    pauseArgument = true;
+}
+
+playArgument = false;
+
+function play() {
+    pauseArgument = false;
+    playArgument = true;
+}
 
 function createObj() {
     io.sockets.emit("send matrix", matrix);
 }
 function game() {
     for (let i = 0; i < grassArr.length; i++) {
-        grassArr[i].mull();
-    }
-    for (let i = 0; i < grassEaterArr.length; i++) {
-        grassEaterArr[i].eat();
-    }
-    for (let i = 0; i < amenakerArr.length; i++) {
-        amenakerArr[i].eat();
-    }
-    for (let i = 0; i < lakeArr.length; i++) {
-        lakeArr[i].mull();
-        if (i > 150) {
+        if (pauseArgument === true) {
             break;
+        } else{
+            grassArr[i].mull();
+        }
+    }
+
+    for (let i = 0; i < grassEaterArr.length; i++) {
+        if (pauseArgument === true) {
+            break;
+        } else {
+            grassEaterArr[i].eat();
+        }
+    }
+
+    for (let i = 0; i < amenakerArr.length; i++) {
+        if (pauseArgument === true) {
+            break;
+        } else {
+            amenakerArr[i].eat();
+        }
+    }
+
+    for (let i = 0; i < lakeArr.length; i++) {
+        if (pauseArgument === true) {
+            break;
+        } else {
+            lakeArr[i].mull();
         }
     }
     io.sockets.emit("send matrix", matrix);
@@ -113,5 +144,8 @@ io.on('connection', function (socket) {
     createObj();
     socket.on('addgrass', addGrass);
     socket.on('addothercharacters', addothercharacters);
-    socket.on('clearf', clearf)
+    socket.on('clearf', clearf);
+    socket.on('pause', pause);
+    socket.on('play', play);
+    socket.on('lake', lake);
 });

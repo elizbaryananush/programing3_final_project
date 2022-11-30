@@ -113,3 +113,18 @@ let clearf = document.getElementById('clearf');
 clearf.addEventListener('click', function () {
     socket.emit('clearf');
 })
+
+let pause = document.getElementById('pause');
+pause.addEventListener('click', function () {
+    socket.emit('pause');
+})
+
+let play = document.getElementById('play');
+play.addEventListener('click', function () {
+    socket.emit('play');
+})
+
+let lake = document.getElementById('lake');
+lake.addEventListener('click', function () {
+    socket.emit('lake');
+})

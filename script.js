@@ -5,7 +5,7 @@ let drop = [];
 
 function setup() {
     // frameRate(1);
-    createCanvas(1000, 1000)
+    createCanvas(600, 600);
     background("#acacas");
     for(var i = 0; i < 200; i++) {
         drop[i] = new Drop();
@@ -175,4 +175,16 @@ lake.addEventListener('click', function () {
     socket.emit('lake');
 })
 
-
+socket.on("send", function(Statistic){
+    let p5 = document.getElementById("p5");
+    let p1 = document.getElementById("p1");
+    let p2 = document.getElementById("p2");
+    let p3 = document.getElementById("p3");
+    // let p4 = document.getElementById("p4");
+    let data = JSON.parse(Statistic);
+    p5.innerHTML = data.grass;
+    p1.innerHTML = data.grassEater;
+    p2.innerHTML = data.amenaker;
+    p3.innerHTML = data.lake;
+    // p4.innerHTML = data.fire;
+});

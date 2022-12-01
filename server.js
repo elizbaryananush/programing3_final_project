@@ -30,6 +30,9 @@ grassArr = [];
 grassEaterArr = [];
 amenakerArr = [];
 lakeArr = [];
+lakeArgument = 0;
+
+
 
 function addGrass() {
     for (let j = 0; j < 1; j++) {
@@ -62,12 +65,17 @@ function addothercharacters() {
 }
 
 function lake() {
-    for (let j = 0; j < 1; j++) {
+    lakeArgument = lakeArgument + 1;
+    for (let j = 0; j < 4; j++) {
         let x = Math.floor(Math.random() * matLen);
         let y = Math.floor(Math.random() * matLen);
         if (matrix[y][x] === 0 || matrix[y][x] === 1 || matrix[y][x] === 2 || matrix[y][x] === 3) {
-            matrix[y][x] = 4;
-            lakeArr.push(new Lake(x, y))
+            if (lakeArgument > 1) {
+                break;
+            } else {
+                matrix[y][x] = 4;
+                lakeArr.push(new Lake(x, y))
+            }
         }
     }
 }
@@ -75,6 +83,7 @@ function lake() {
 // _____________
 
 function clearf() {
+    lakeArgument = 0;
     for (let i = 0; i < matrix.length; i++) {
         for (let j = 0; j < matrix[i].length; j++) {
             matrix[i][j] = 0;
@@ -88,13 +97,11 @@ function clearf() {
 }
 
 pauseArgument = false;
-
 function pause() {
     pauseArgument = true;
 }
 
 playArgument = false;
-
 function play() {
     pauseArgument = false;
     playArgument = true;
@@ -103,6 +110,7 @@ function play() {
 function createObj() {
     io.sockets.emit("send matrix", matrix);
 }
+
 function game() {
     for (let i = 0; i < grassArr.length; i++) {
         if (pauseArgument === true) {
@@ -111,7 +119,6 @@ function game() {
             grassArr[i].mull();
         }
     }
-
     for (let i = 0; i < grassEaterArr.length; i++) {
         if (pauseArgument === true) {
             break;
@@ -119,7 +126,6 @@ function game() {
             grassEaterArr[i].eat();
         }
     }
-
     for (let i = 0; i < amenakerArr.length; i++) {
         if (pauseArgument === true) {
             break;
@@ -127,20 +133,32 @@ function game() {
             amenakerArr[i].eat();
         }
     }
-
     for (let i = 0; i < lakeArr.length; i++) {
-        if (i < 200) {
-            if (pauseArgument === true) {
-                break;
-            } else {
-                lakeArr[i].mull();
-            }
-        }else{
+        if (i > 400) {
             break;
+        } else {
+            lakeArr[i].mull();
         }
     }
+
+// STATISTIC PART
+
+    let Statistic = {
+        grass: grassArr.length,
+        grassEater: grassEaterArr.length,
+        amenaker: amenakerArr.length,
+        lake: lakeArr.length,
+    };
+    let data = JSON.stringify(Statistic, null, 2)
+    fs.writeFileSync('hello.json', data)
+    io.sockets.emit("send", data);
+
+// ________________
+
     io.sockets.emit("send matrix", matrix);
 }
+
+
 
 setInterval(game, 100);
 

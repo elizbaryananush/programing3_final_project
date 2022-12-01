@@ -10,31 +10,86 @@
         p {
             display: inline;
         }
-        #rcorners4 {
-            border-radius: 8px;
-            background: #73AD21;
+
+        #rcorners1 {
+            background: green;
             padding: 7px;
             width: 22px;
             height: 20px;
+            margin: 10px;
+            margin-top: 70px;
         }
-        #huh {
+
+        #rcorners2 {
+            background: red;
             padding: 7px;
             width: 22px;
             height: 20px;
-            display: inline;
-            align-items: baseline;
+            margin: 10px;
+            margin-top: 70px;
+        }
+
+        #rcorners3 {
+            background: yellow;
+            padding: 7px;
+            width: 22px;
+            height: 20px;
+            margin: 10px;
+            margin-top: 70px;
+        }
+
+        #rcorners4 {
+            background: blue;
+            padding: 7px;
+            width: 22px;
+            height: 20px;
+            margin: 10px;
+            margin-top: 70px;
+        }
+
+        .btcl {
+            border-color: rgb(221, 0, 255);
+            background-color: rgb(210, 120, 223);
         }
     </style>
 </head>
 
 <body>
-    <div id="huh">
-        <div id="rcorners4" style = "color:#73AD21;">gjh</div>
-        <p style="padding:5px;">you make me un poco locoooo</p>
+    <br>
+    <div>
+        <div>
+            <p5 id="p5"></p5>
+            <p id="rcorners1" style="color: green;">gjh</p>
+            <p style="padding:3px;">Grass :just spread over empty cells</p>
+            <button id="addgrass" class="btcl">Add Grass</button>
+            <div id="div2"></div>
+        </div>
+        <br>
+        <div>
+            <p2 id="p2"></p2>
+            <p id="rcorners2" style="color:red;">gjh</p>
+            <p style="padding:3px;">omnivore ։eat grass and grass eater</p>
+            <button id="addothercharacters" class="btcl">Add Other Characters</button>
+        </div>
+        <br>
+        <div>
+            <p1 id="p1"></p1>
+            <p id="rcorners3" style="color:yellow;">gjh</p>
+            <p style="padding:3px;">grass eater :eat grass</p>
+            <button id="addothercharacters" class="btcl">Add Other Characters</button>
+        </div>
+        <br>
+        <div>
+            <p3 id="p3"></p3>
+            <p id="rcorners4" style="color:blue;">gjh</p>
+            <p style="padding:3px;"> water :apply to all (you can add it only 1 time)</p>
+            <button id="lake" class="btcl">Add Lake</button>
+        </div>
     </div>
     <br>
+
     <button id="rain">Snow</button>
-    <button id="lake">Add Lake</button>
+
     <button id="play">Play</button>
     <button id="pause">Pause</button>
     <button id="winter">Winter</button>
@@ -42,11 +97,12 @@
     <button id="summer">Summer</button>
     <button id="spring">Spring</button>
     <button id="clearf">Clear</button>
-    <button id="addothercharacters">Add Other Characters</button>
-    <button id="addgrass">Add Grass</button>
+
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.14/p5.js"></script>
-    <script src="script.js"></script>
+    <div style="padding-left:200px;">
+        <script src="script.js"></script>
+    </div>
 </body>
 
 </html>

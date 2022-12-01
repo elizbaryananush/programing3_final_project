@@ -24,7 +24,7 @@ function generateMatrix(matLen) {
     }
     return matrix;
 }
-matLen = 40;
+matLen = 60;
 matrix = generateMatrix(matLen);
 grassArr = [];
 grassEaterArr = [];
@@ -61,11 +61,11 @@ function addothercharacters() {
     }
 }
 
-function lake(){
+function lake() {
     for (let j = 0; j < 1; j++) {
         let x = Math.floor(Math.random() * matLen);
         let y = Math.floor(Math.random() * matLen);
-        if (matrix[y][x] === 0 || matrix[y][x] === 1) {
+        if (matrix[y][x] === 0 || matrix[y][x] === 1 || matrix[y][x] === 2 || matrix[y][x] === 3) {
             matrix[y][x] = 4;
             lakeArr.push(new Lake(x, y))
         }
@@ -107,7 +107,7 @@ function game() {
     for (let i = 0; i < grassArr.length; i++) {
         if (pauseArgument === true) {
             break;
-        } else{
+        } else {
             grassArr[i].mull();
         }
     }
@@ -129,10 +129,14 @@ function game() {
     }
 
     for (let i = 0; i < lakeArr.length; i++) {
-        if (pauseArgument === true) {
+        if (i < 200) {
+            if (pauseArgument === true) {
+                break;
+            } else {
+                lakeArr[i].mull();
+            }
+        }else{
             break;
-        } else {
-            lakeArr[i].mull();
         }
     }
     io.sockets.emit("send matrix", matrix);

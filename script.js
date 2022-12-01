@@ -1,16 +1,21 @@
 var socket = io();
-let side = 12;
+let side = 10;
+let drop = [];
 
 
 function setup() {
     // frameRate(1);
     createCanvas(1000, 1000)
     background("#acacas");
+    for(var i = 0; i < 200; i++) {
+        drop[i] = new Drop();
+    }
 }
 
 let springArgument = false;
 let spring = document.getElementById('spring');
 spring.addEventListener('click', function () {
+    rainArgument = false;
     springArgument = true;
     summerArgument = false;
     autumnArgument = false;
@@ -20,6 +25,7 @@ spring.addEventListener('click', function () {
 let summerArgument = true;
 let summer = document.getElementById('summer');
 summer.addEventListener('click', function () {
+    rainArgument = false;
     springArgument = false;
     summerArgument = true;
     autumnArgument = false;
@@ -29,6 +35,7 @@ summer.addEventListener('click', function () {
 let autumnArgument = false;
 let autumn = document.getElementById('autumn');
 autumn.addEventListener('click', function () {
+    rainArgument = false;
     springArgument = false;
     summerArgument = false;
     autumnArgument = true;
@@ -38,11 +45,43 @@ autumn.addEventListener('click', function () {
 let winterArgument = false;
 let winter = document.getElementById('winter');
 winter.addEventListener('click', function () {
+    rainArgument = false;
     springArgument = false;
     summerArgument = false;
     autumnArgument = false;
     winterArgument = true;
 });
+
+let rainArgument = false;
+let rain = document.getElementById('rain');
+rain.addEventListener('click',function(){
+    rainArgument = true;
+    springArgument = false;
+    summerArgument = false;
+    autumnArgument = false;
+    winterArgument = true;
+})
+
+function Drop() {
+    this.x = random(0, width);
+    this.y = random(0, -height);
+
+    this.show = function () {
+        noStroke();
+        fill("lightblue");
+        ellipse(this.x, this.y, random(1, 5), random(1, 5));
+    }
+    this.update = function () {
+        this.speed = random(5, 10);
+        this.gravity = 1.05;
+        this.y = this.y + this.speed * this.gravity;
+
+        if (this.y > height) {
+            this.y = random(0, -height);
+            this.gravity = 0;
+        }
+    }
+}
 
 function draww(matrix) {
     noStroke();
@@ -75,13 +114,13 @@ function draww(matrix) {
             else if (matrix[i][j] === 4) {
                 if (springArgument === true) {
                     fill('#7DF9FF')
-                
-                } else if (summerArgument === true) {
+                }
+                else if (summerArgument === true) {
                     fill('blue');
-                } 
+                }
                 else if (winterArgument === true) {
                     fill('#7DF9FF'); // ligth blue
-                } 
+                }
                 else if (autumnArgument === true) {
                     fill('#6495ED'); // cornflower blue
                 }
@@ -93,6 +132,13 @@ function draww(matrix) {
             }
             rect(i * side, j * side, side, side);
         }
+    }
+    if (rainArgument === true) {
+        
+        for(var i = 0; i < 200; i++) {
+            drop[i].show();
+            drop[i].update();
+          }
     }
 }
 
@@ -128,3 +174,5 @@ let lake = document.getElementById('lake');
 lake.addEventListener('click', function () {
     socket.emit('lake');
 })
+
+

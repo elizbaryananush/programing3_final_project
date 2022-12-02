@@ -207,4 +207,4 @@ socket.on("send", function (Statistic) {
     p2.innerHTML = data.amenaker;
     p3.innerHTML = data.lake;
     p4.innerHTML = data.fire;
-});
+}); 

@@ -205,4 +205,4 @@ io.on('connection', function (socket) {
     socket.on('lake', lake);
     socket.on('fire', fire);
     // socket.on('rain', rain);
-});
+}); 

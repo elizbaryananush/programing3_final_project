@@ -105,4 +105,4 @@ module.exports = class GrassEater extends LivingCreature {
             this.energy = 8;
         }
     }
-}
+} 

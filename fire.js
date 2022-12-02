@@ -37,4 +37,4 @@ module.exports = class Fire extends LivingCreature {
             this.multiply = 0;
         }
     }
-}
+} 

@@ -37,4 +37,4 @@ module.exports = class Lake extends LivingCreature {
             this.multiply = 0;
         }
     }
-}
+} 

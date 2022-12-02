@@ -47,6 +47,15 @@
             margin-top: 70px;
         }
 
+        #rcorners5 {
+            background: orange;
+            padding: 7px;
+            width: 22px;
+            height: 20px;
+            margin: 10px;
+            margin-top: 70px;
+        }
+
         .btcl {
             border-color: rgb(221, 0, 255);
             background-color: rgb(210, 120, 223);
@@ -58,38 +67,43 @@
     <br>
     <div>
         <div>
-            <p5 id="p5"></p5>
             <p id="rcorners1" style="color: green;">gjh</p>
             <p style="padding:3px;">Grass :just spread over empty cells</p>
             <button id="addgrass" class="btcl">Add Grass</button>
-            <div id="div2"></div>
+            <p5 id="p5"></p5>
         </div>
         <br>
         <div>
-            <p2 id="p2"></p2>
             <p id="rcorners2" style="color:red;">gjh</p>
             <p style="padding:3px;">omnivore ։eat grass and grass eater</p>
             <button id="addothercharacters" class="btcl">Add Other Characters</button>
+            <p2 id="p2"></p2>
         </div>
         <br>
         <div>
-            <p1 id="p1"></p1>
             <p id="rcorners3" style="color:yellow;">gjh</p>
             <p style="padding:3px;">grass eater :eat grass</p>
             <button id="addothercharacters" class="btcl">Add Other Characters</button>
+            <p1 id="p1"></p1>
         </div>
         <br>
         <div>
-            <p3 id="p3"></p3>
             <p id="rcorners4" style="color:blue;">gjh</p>
             <p style="padding:3px;"> water :apply to all (you can add it only 1 time)</p>
             <button id="lake" class="btcl">Add Lake</button>
+            <p3 id="p3"></p3>
+        </div>
+        <br>
+        <div>
+            <p id="rcorners5" style="color:orange;">gjh</p>
+            <p style="padding:3px;"> Fire :eat everithing except water</p>
+            <button id="fire" class="btcl">Add Fire</button>
+            <p4 id="p4"></p4>
         </div>
     </div>
     <br>
 
     <button id="rain">Snow</button>
-
     <button id="play">Play</button>
     <button id="pause">Pause</button>
     <button id="winter">Winter</button>
@@ -99,6 +113,7 @@
     <button id="clearf">Clear</button>
 
     <script src="/socket.io/socket.io.js"></script>
+    <script src="p5.sound.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.14/p5.js"></script>
     <div style="padding-left:200px;">
         <script src="script.js"></script>

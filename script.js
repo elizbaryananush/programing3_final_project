@@ -2,15 +2,16 @@ var socket = io();
 let side = 10;
 let drop = [];
 
-
 function setup() {
     // frameRate(1);
     createCanvas(600, 600);
     background("#acacas");
-    for(var i = 0; i < 200; i++) {
+    for (var i = 0; i < 200; i++) {
         drop[i] = new Drop();
     }
 }
+
+
 
 let springArgument = false;
 let spring = document.getElementById('spring');
@@ -52,15 +53,23 @@ winter.addEventListener('click', function () {
     winterArgument = true;
 });
 
+let pauseArgument = false
 let rainArgument = false;
 let rain = document.getElementById('rain');
-rain.addEventListener('click',function(){
+rain.addEventListener('click', function () {
     rainArgument = true;
     springArgument = false;
     summerArgument = false;
     autumnArgument = false;
     winterArgument = true;
 })
+
+// let clearArgument = false;
+// let clearf = document.getElementById('clearf');
+// clearf.addEventListener('click',function(){
+//     rainArgument = false;
+// })
+
 
 function Drop() {
     this.x = random(0, width);
@@ -134,11 +143,10 @@ function draww(matrix) {
         }
     }
     if (rainArgument === true) {
-        
-        for(var i = 0; i < 200; i++) {
+        for (var i = 0; i < 200; i++) {
             drop[i].show();
-            drop[i].update();
-          }
+            drop[i].update();                
+        }
     }
 }
 
@@ -158,11 +166,13 @@ addothercharacters.addEventListener('click', function () {
 let clearf = document.getElementById('clearf');
 clearf.addEventListener('click', function () {
     socket.emit('clearf');
+    rainArgument = false;
 })
 
 let pause = document.getElementById('pause');
 pause.addEventListener('click', function () {
     socket.emit('pause');
+    pauseArgument = true;
 })
 
 let play = document.getElementById('play');
@@ -175,16 +185,26 @@ lake.addEventListener('click', function () {
     socket.emit('lake');
 })
 
-socket.on("send", function(Statistic){
+let fire = document.getElementById('fire');
+fire.addEventListener('click', function () {
+    socket.emit('fire');
+})
+
+// let rain1 = document.getElementById('rain');
+// rain1.addEventListener('click', function () {
+//     socket.emit('rain');
+// })
+
+socket.on("send", function (Statistic) {
     let p5 = document.getElementById("p5");
     let p1 = document.getElementById("p1");
     let p2 = document.getElementById("p2");
     let p3 = document.getElementById("p3");
-    // let p4 = document.getElementById("p4");
+    let p4 = document.getElementById("p4");
     let data = JSON.parse(Statistic);
     p5.innerHTML = data.grass;
     p1.innerHTML = data.grassEater;
     p2.innerHTML = data.amenaker;
     p3.innerHTML = data.lake;
-    // p4.innerHTML = data.fire;
+    p4.innerHTML = data.fire;
 });

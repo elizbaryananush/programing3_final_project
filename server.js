@@ -12,6 +12,7 @@ const Grass = require('./grass');
 const GrassEater = require('./grassEater');
 const Lake = require('./lake');
 const Amenaker = require('./amenaker')
+const Fire = require('./fire')
 server.listen(3001);
 
 function generateMatrix(matLen) {
@@ -30,6 +31,7 @@ grassArr = [];
 grassEaterArr = [];
 amenakerArr = [];
 lakeArr = [];
+fireArr = [];
 lakeArgument = 0;
 
 
@@ -80,10 +82,28 @@ function lake() {
     }
 }
 
+function fire() {
+    for (let j = 0; j < 1; j++) {
+        let x = Math.floor(Math.random() * matLen);
+        let y = Math.floor(Math.random() * matLen);
+        if (matrix[y][x] === 0 || matrix[y][x] === 1) {
+            matrix[y][x] = 5;
+            fireArr.push(new Fire(x, y))
+        }
+    }
+}
+
+// snowArgument = false;
+function rain(){
+    fireArr.length = 0;
+    // snowArgument = true;
+}
+
 // _____________
 
 function clearf() {
     lakeArgument = 0;
+    snowArgument = false;
     for (let i = 0; i < matrix.length; i++) {
         for (let j = 0; j < matrix[i].length; j++) {
             matrix[i][j] = 0;
@@ -91,6 +111,7 @@ function clearf() {
             grassEaterArr.length = 0;
             amenakerArr.length = 0;
             lakeArr.length = 0;
+            fireArr.length = 0;
         }
     }
 
@@ -134,26 +155,38 @@ function game() {
         }
     }
     for (let i = 0; i < lakeArr.length; i++) {
-        if (i > 400) {
+        if (pauseArgument === true) {
             break;
         } else {
-            lakeArr[i].mull();
+            if (i > 400) {
+                break;
+            } else {
+                lakeArr[i].mull();
+            }
+        }
+    }
+    for (let i = 0; i < fireArr.length; i++) {
+        if (pauseArgument === true) {
+            break;
+        } else {
+            fireArr[i].mull();
         }
     }
 
-// STATISTIC PART
+    // STATISTIC PART
 
     let Statistic = {
         grass: grassArr.length,
         grassEater: grassEaterArr.length,
         amenaker: amenakerArr.length,
         lake: lakeArr.length,
+        fire: fireArr.length,
     };
     let data = JSON.stringify(Statistic, null, 2)
     fs.writeFileSync('hello.json', data)
     io.sockets.emit("send", data);
 
-// ________________
+    // ________________
 
     io.sockets.emit("send matrix", matrix);
 }
@@ -170,4 +203,6 @@ io.on('connection', function (socket) {
     socket.on('pause', pause);
     socket.on('play', play);
     socket.on('lake', lake);
+    socket.on('fire', fire);
+    // socket.on('rain', rain);
 });

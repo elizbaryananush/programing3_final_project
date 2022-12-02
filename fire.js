@@ -1,6 +1,6 @@
 const LivingCreature = require("./LivingCreature");
 
-module.exports = class Lake extends LivingCreature {
+module.exports = class Fire extends LivingCreature {
     constructor(x, y) {
         super(x, y);
         this.energy = 4;
@@ -21,19 +21,19 @@ module.exports = class Lake extends LivingCreature {
         this.getNewCordinates();
         return super.chooseCell(ch1, ch2, ch3, ch4, ch5);
     }
-    random(ch1, ch2, ch3, ch4, ch5) {
-        let found = this.chooseCell(ch1, ch2, ch3, ch4, ch5);
+    random(ch1, ch2, ch3, ch4) {
+        let found = this.chooseCell(ch1, ch2, ch3, ch4);
         let result = Math.floor(Math.random() * found.length)
         return found[result];
     }
     mull() {
         this.multiply++;
-        let emptyCell = this.random(0, 1, 2, 3, 5);
+        let emptyCell = this.random(0, 1, 2, 3);
         if (emptyCell && this.multiply >= 7) {
             let x = emptyCell[0];
             let y = emptyCell[1];
-            matrix[y][x] = 4;
-            lakeArr.push(new Lake(x, y));
+            matrix[y][x] = 5;
+            fireArr.push(new Fire(x, y));
             this.multiply = 0;
         }
     }
